@@ -1,0 +1,60 @@
+Maximum Subsequence Score
+
+Example 1:
+Input: nums1 = [1,3,3,2], nums2 = [2,1,3,4], k = 3
+Output: 12
+
+Example 2:
+
+Input: nums1 = [4,2,3,1,1], nums2 = [7,5,10,9,6], k = 1
+Output: 30
+
+
+
+class Solution {
+    private class Pair{
+        int val1;
+        int val2;
+
+        public Pair(int val1, int val2){
+            this.val1 = val1;
+            this.val2 = val2;
+        }
+    }
+    public long maxScore(int[] nums1, int[] nums2, int k) {
+        
+        Pair[] nums = new Pair[nums1.length];
+        for(int i = 0; i < nums1.length; i++){
+            nums[i] = new Pair(nums1[i], nums2[i]);           
+        }
+
+        Arrays.sort(nums, (a,b) ->{
+
+            if(a.val2 == b.val2){
+                return a.val1 - b.val1;
+            }
+            return a.val2 - b.val2;
+        });
+
+        
+
+        long sum = 0;
+        long max = 0;
+
+        PriorityQueue<Integer> pq = new PriorityQueue();
+
+        for(int i = nums1.length - 1; i >= 0; i--){
+            int minValue = nums[i].val2;
+            while(pq.size() > k-1){
+                sum -= pq.poll();
+            }
+            sum += nums[i].val1;
+            pq.add(nums[i].val1);
+
+            if(pq.size() == k){
+                max = Math.max(max, sum*minValue);
+            }    
+        }
+        return max;
+    }
+}
