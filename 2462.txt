@@ -1,0 +1,44 @@
+2462. Total cost to hire k workers
+
+Example 1:
+Input: costs = [17,12,10,2,7,2,11,20,8], k = 3, candidates = 4
+Output: 11
+
+Example 2:
+Input: costs = [1,2,4,1], k = 3, candidates = 3
+Output: 4
+
+
+
+class Solution {
+    public long totalCost(int[] costs, int k, int candidates) {
+        PriorityQueue<Integer> pq1 = new PriorityQueue();
+        PriorityQueue<Integer> pq2 = new PriorityQueue();
+
+        long ans = 0;
+        int count = 0,
+            i = 0,
+            j = costs.length - 1;
+
+        while(count < k){
+            while(pq1.size() < candidates && i <= j) pq1.add(costs[i++]);
+            while(pq2.size() < candidates && j >= i) pq2.add(costs[j--]);
+
+            int a = pq1.size() > 0? pq1.peek():Integer.MAX_VALUE;
+            int b = pq2.size() > 0? pq2.peek():Integer.MAX_VALUE;
+
+
+            if(a<=b){
+                ans += a;
+                pq1.poll();
+            }
+            else{
+                ans += b;
+                pq2.poll();
+            }
+            count++;
+        }
+        return ans;
+    }
+
+}
