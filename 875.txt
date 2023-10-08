@@ -1,0 +1,46 @@
+875. Koko Eating Bananas
+
+Example 1:
+Input: piles = [3,6,7,11], h = 8
+Output: 4
+
+Example 2:
+Input: piles = [30,11,23,4,20], h = 5
+Output: 30
+
+Example 3:
+Input: piles = [30,11,23,4,20], h = 6
+Output: 23
+
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+
+        int min = 0;
+        int max = Integer.MIN_VALUE;
+
+        for(int i = 0; i < piles.length; i++){
+            max = Math.max(piles[i], max);
+        }
+
+        while(min < max){
+            int mid = (min + max)/2;
+            if(getHours(mid,piles) > h){
+                min = mid + 1;
+            }
+            else{
+                max = mid;
+            }
+        }
+        
+        return min;
+    }
+
+    private int getHours(int k, int[] piles){
+        int h = 0;
+        for(int pile : piles){
+            h += Math.ceil((double)pile/k);
+        }
+        return h;
+    }
+}
