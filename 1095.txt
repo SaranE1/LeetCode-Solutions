@@ -1,0 +1,68 @@
+1095. Find in Mountain Array
+
+Example 1:
+Input: array = [1,2,3,4,5,3,1], target = 3
+Output: 2
+
+Example 2:
+Input: array = [0,1,2,4,2,1], target = 3
+Output: -1
+
+class Solution {
+    public int findInMountainArray(int target, MountainArray mountainArr) {
+        
+        // To find the peak element
+        int low = 1;
+        int high = mountainArr.length() - 2;
+
+        while(low < high){
+            int mid = (low + high) / 2;
+            if(mountainArr.get(mid) < mountainArr.get(mid + 1)){
+                low = mid + 1;
+            }
+            else{
+                high = mid;
+            }
+        }
+
+        int peek = low;
+        
+
+        // Find the target in the increasing order
+        low = 0;
+        high = peek;
+
+        while(low < high){
+            int mid = (low + high) / 2;
+            if(mountainArr.get(mid) < target){
+                low = mid + 1;
+            }
+            else{
+                high = mid;
+            }
+        } 
+
+        if(mountainArr.get(low) == target){
+            return low;
+        }
+
+        //Search in the decreasing order
+        low = peek + 1;
+        high = mountainArr.length() - 1;
+
+        while(low < high){
+            int mid = (low + high) / 2;
+            if(mountainArr.get(mid) > target){
+                low = mid + 1;
+            }
+            else{
+                high = mid;
+            }
+        }
+
+        if(mountainArr.get(low) == target){
+            return low;
+        }
+        return -1;
+    }
+}
