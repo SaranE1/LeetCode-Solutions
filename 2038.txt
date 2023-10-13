@@ -1,0 +1,28 @@
+2038. Remove Colored Pieces if Both Neighbors are the Same Color\
+
+Example 1:
+Input: colors = "AAABABB"
+Output: true
+
+Example 2:
+Input: colors = "AA"
+Output: false
+
+Example 3:
+Input: colors = "ABBBBBBBAAA"
+Output: false
+
+class Solution {
+    public boolean winnerOfGame(String colors) {
+        int alice = 0,
+            bob = 0;
+        for(int i = 1; i < colors.length() - 1; i++){
+            if(colors.charAt(i) == colors.charAt(i+1) && colors.charAt(i) == colors.charAt(i-1)){
+                if(colors.charAt(i) == 'A') alice++;
+                else bob++;
+            }
+        }
+        System.out.println(alice + " " + bob);
+        return alice > bob ? true : false;
+    }
+}
