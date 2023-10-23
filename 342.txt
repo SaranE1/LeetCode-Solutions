@@ -1,0 +1,26 @@
+342. Power of Four
+
+Example 1:
+    Input: n = 16
+    Output: true
+
+Example 2:
+    Input: n = 5
+    Output: false
+
+Example 3:
+    Input: n = 1
+    Output: true
+
+
+class Solution {
+    public boolean isPowerOfFour(int n) {
+        for(int i = 0; i < 16; i++){
+            int powValue = (int) Math.pow(4, i);
+            if(powValue > n) return false;
+            if(powValue == n) return true;
+        }
+        return false;
+    }
+}
+ 
